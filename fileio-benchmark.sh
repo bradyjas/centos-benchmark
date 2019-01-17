@@ -29,15 +29,15 @@ done
 set -- "${POSITIONAL[@]}" # Restore positional parameters
 
 # Calculate threads to test
-RESULTS=()
 THREADSEQ=(1)
 if [ ${MAXTHREADS} -gt 1 ]; then
   THREADSEQ+=(${MAXTHREADS})
 fi
 
 # Run the tests
+RESULTS=()
 for block in 4 16; do
-  for threads in ${THREADSEQ}; do
+  for threads in ${THREADSEQ[*]}; do
     for mode in 'seqrd' 'seqwr' 'rndrd' 'rndwr' 'rndrw'; do
       printf "Preparing test files... (this may take some time)\n"
       sysbench --threads=${MAXTHREADS} --file-total-size=${FILESIZE} --file-num=${FILENUM} fileio prepare > /dev/null
